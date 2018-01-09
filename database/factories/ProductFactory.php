@@ -5,9 +5,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
+        'name' => substr($faker->sentence(3),0,-1), //substr("abcdef", 0, -1);  // devuelve "abcde" substr("abcdef", 2, -1);  // devuelve "cde"
         'description' => $faker->sentence(10),
         'long_description' => $faker->text,
-        'price' => $faker->randomFloat(2, 5, 150) //Genera numero de dos decimales entre 5 y 150
+        'price' => $faker->randomFloat(2, 5, 150), //Genera numero de dos decimales entre 5 y 150
+   		'category_id' => $faker->numberBetween(1,5)
     ];
 });
