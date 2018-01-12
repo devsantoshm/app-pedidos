@@ -16,3 +16,7 @@ Route::get('/', 'TestController@welcome');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/admin/products', 'ProductController@index'); // para ver el listado
+Route::get('/admin/products/create', 'ProductController@create'); // para ver el formulario registro
+Route::post('/admin/products', 'ProductController@store'); // para registrar los datos en la BD
