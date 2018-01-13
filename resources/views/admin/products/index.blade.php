@@ -42,8 +42,11 @@
                                     <a href="{{ url('admin/products/'.$product->id.'/edit') }}" rel="tooltip" title="Editar producto" class="btn btn-success btn-simple btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <form method="post" action="{{ url('admin/products/'.$product->id.'/delete') }}">
-                                        {{ csrf_field() }}
+                                    <form method="post" action="{{ url('admin/products/'.$product->id) }}">
+                                        {{ csrf_field() }} 
+                                        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+                                        {{ method_field('DELETE') }}
+                                        <!-- <input type="hidden" name="_method" value="DELETE"> -->
                                         <button type="submit" rel="tooltip" title="Eliminar" class="btn btn-danger btn-simple btn-xs">
                                             <i class="fa fa-times"></i>
                                         </button>
