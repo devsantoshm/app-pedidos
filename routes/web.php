@@ -22,4 +22,4 @@ Route::get('/admin/products/create', 'ProductController@create'); // para ver el
 Route::post('/admin/products', 'ProductController@store'); // para registrar los datos en la BD
 Route::get('/admin/products/{id}/edit', 'ProductController@edit'); // para ver el formulario edición
 Route::post('/admin/products/{id}/edit', 'ProductController@update'); // para actualizar los datos en la BD
-Route::get('/admin/products/{id}/delete', 'ProductController@destroy');
+Route::post('/admin/products/{id}/delete', 'ProductController@destroy');
