@@ -21,7 +21,23 @@ class ProductController extends Controller
     //registrar un nuevo producto en la bd
     public function store(Request $request)
     {
-    	//dd($request->all());
+        $messages = [
+            'name.required' => 'Ingresa un nombre para el producto',
+            'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'description.required' => 'Ingresa una descripción para el producto',
+            'description.max' => 'La descripción solo admite hasta 200 caracteres',
+            'price.required' => 'Ingresa un precio para el producto',
+            'price.numeric' => 'Ingresa un precio válido',
+            'price.min' => 'No se admiten valores negativos'
+        ];
+
+        $rules = [
+            'name' => 'required|min:3',
+            'description' => 'required|max:200',
+            'price' => 'required|numeric|min:0'
+        ];
+        $this->validate($request, $rules, $messages);
+  
         $product = new Product();
         $product->name = $request->input('name');
         $product->description = $request->input('description');
@@ -41,7 +57,23 @@ class ProductController extends Controller
     //registrar un nuevo producto en la bd
     public function update(Request $request, $id)
     {
-        //dd($request->all());
+        $messages = [
+            'name.required' => 'Ingresa un nombre para el producto',
+            'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'description.required' => 'Ingresa una descripción para el producto',
+            'description.max' => 'La descripción solo admite hasta 200 caracteres',
+            'price.required' => 'Ingresa un precio para el producto',
+            'price.numeric' => 'Ingresa un precio válido',
+            'price.min' => 'No se admiten valores negativos'
+        ];
+
+        $rules = [
+            'name' => 'required|min:3',
+            'description' => 'required|max:200',
+            'price' => 'required|numeric|min:0'
+        ];
+        $this->validate($request, $rules, $messages);
+        
         $product = Product::find($id);
         $product->name = $request->input('name');
         $product->description = $request->input('description');
