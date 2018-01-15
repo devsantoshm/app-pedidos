@@ -17,9 +17,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin/products', 'ProductController@index'); // para ver el listado
-Route::get('/admin/products/create', 'ProductController@create'); // para ver el formulario registro
-Route::post('/admin/products', 'ProductController@store'); // para registrar los datos en la BD
-Route::get('/admin/products/{id}/edit', 'ProductController@edit'); // para ver el formulario edición
-Route::post('/admin/products/{id}/edit', 'ProductController@update'); // para actualizar los datos en la BD
-Route::delete('/admin/products/{id}', 'ProductController@destroy'); // form eliminar
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function(){
+	Route::get('/products', 'ProductController@index'); // para ver el listado
+	Route::get('/products/create', 'ProductController@create'); // para ver el formulario registro
+	Route::post('/products', 'ProductController@store'); // para registrar los datos en la BD
+	Route::get('/products/{id}/edit', 'ProductController@edit'); // para ver el formulario edición
+	Route::post('/products/{id}/edit', 'ProductController@update'); // para actualizar los datos en la BD
+	Route::delete('/products/{id}', 'ProductController@destroy'); // form eliminar
+});
