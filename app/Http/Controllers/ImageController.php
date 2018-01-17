@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\ProductImage;
+use File;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -21,20 +22,36 @@ class ImageController extends Controller
         $file = $request->file('photo');
         $path = public_path() . '/images/products';
         $fileName = uniqid() . $file->getClientOriginalName(); //ára evitar subir imagenes con el mismo nombre
-        $file->move($path, $fileName);
+        $moved = $file->move($path, $fileName);
 
         // Crear un registro en la tabla product_images
-        $productImage = new ProductImage();
-        $productImage->image = $fileName;
-        //$productImage->featured = false;
-        $productImage->product_id = $id;
-        $productImage->save(); // insert
+        if($moved){
+            $productImage = new ProductImage();
+            $productImage->image = $fileName;
+            //$productImage->featured = false;
+            $productImage->product_id = $id;
+            $productImage->save(); // insert
+        }
 
         return back();
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
+        // Eliminar el archivo
+        $productImage = ProductImage::find($request->image_id); //$request->input('image_id')
+        if (substr($productImage->image, 0, 4) === "http") {
+            $deleted = true;
+        } else {
+            $fullPath = public_path() . '/images/products/' . $productImage->image;
+            $deleted = File::delete($fullPath);
+        }
+
+        // eliminar la imágen de la bd
+        if ($deleted) {
+            $productImage->delete();
+        }
     	
+        return back();
     }
 }
