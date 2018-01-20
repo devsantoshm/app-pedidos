@@ -2,12 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function show($id)
     {
-    	return "Mostrar datos del producto con este $id";
+    	$product = Product::find($id);
+    	$images = $product->images;
+
+    	$imagesLeft = collect();
+    	$imagesRight = collect();
+    	foreach ($images as $key => $image) {
+    		if($key%2 == 0)
+    			$imagesLeft->push($image);
+    		else
+    			$imagesRight->push($image);
+    	}
+    	//dd($imagesLeft);
+    	return view('products.show', compact('product', 'imagesLeft', 'imagesRight'));
+    	//return "Mostrar datos del producto con este $id";
     }
 }
