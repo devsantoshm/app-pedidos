@@ -43,7 +43,7 @@ class User extends Authenticatable
         $cart = new Cart();
         $cart->status = 'Active';
         $cart->user_id = $this->id;
-        $cart->save();
+        $cart->save(); // INSERT
 
         return $cart;
     }
