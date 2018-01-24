@@ -26,9 +26,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($categories as $key => $category)
                             <tr>
-                                <td class="text-center">{{ $category->id }}</td>
+                                <td class="text-center">{{ ($key + 1) }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->description }}</td>
                                 <td class="td-actions text-right">

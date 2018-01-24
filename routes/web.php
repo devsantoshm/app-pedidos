@@ -40,7 +40,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 	Route::get('categories', 'CategoryController@index'); // para ver el listado
 	Route::get('/categories/create', 'CategoryController@create'); // para ver el formulario registro
 	Route::post('/categories', 'CategoryController@store'); // para registrar los datos en la BD
-	Route::get('/categories/{id}/edit', 'CategoryController@edit'); // para ver el formulario edición
-	Route::post('/categories/{id}/edit', 'CategoryController@update'); // para actualizar los datos en la BD
-	Route::delete('/categories/{id}', 'CategoryController@destroy'); // form eliminar
+	Route::get('/categories/{category}/edit', 'CategoryController@edit'); // para ver el formulario edición
+	Route::post('/categories/{category}/edit', 'CategoryController@update'); // para actualizar los datos en la BD
+	Route::delete('/categories/{category}', 'CategoryController@destroy'); // form eliminar
 });

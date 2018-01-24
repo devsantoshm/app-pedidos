@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
      public function index()
     {
-    	$categories = Category::paginate(10);
+    	$categories = Category::orderBy('name')->paginate(10); // ordernar por el nombre de forma ascendente
     	return view('admin.categories.index', compact('categories'));
     }
 
@@ -22,63 +22,34 @@ class CategoryController extends Controller
     //registrar un nuevo producto en la bd
     public function store(Request $request)
     {
-        $messages = [
-            'name.required' => 'Es necesario ingresar un nombre para la categoría',
-            'name.min' => 'El nombre de la categoría debe tener al menos 3 caracteres',
-            'description.max' => 'La descripción corta solo admite hasta 250 caracteres'
-        ];
-
-        $rules = [
-            'name' => 'required|min:3',
-            'description' => 'max:250'
-        ];
-        $this->validate($request, $rules, $messages);
+        $this->validate($request, Category::$rules, Category::$messages);
   
         Category::create($request->all()); //Asignación masiva de atributos
 
         return redirect('admin/categories');
     }
 
-    public function edit($id) //muestra el formulario edición de un producto
+    //muestra el formulario edición de un producto
+    public function edit(Category $category) //El id que recibimos se convierte en una categoria
     {
-        $category = Category::find($id);
+        //$category = Category::find($id); ejecuta find por detrás con el objeto category
         return view('admin.categories.edit', compact('category'));
     }
 
     //registrar un nuevo producto en la bd
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category) // convierte el $id en un objeto category
     {
-        $messages = [
-            'name.required' => 'Ingresa un nombre para el producto',
-            'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
-            'description.required' => 'Ingresa una descripción para el producto',
-            'description.max' => 'La descripción solo admite hasta 200 caracteres',
-            'price.required' => 'Ingresa un precio para el producto',
-            'price.numeric' => 'Ingresa un precio válido',
-            'price.min' => 'No se admiten valores negativos'
-        ];
-
-        $rules = [
-            'name' => 'required|min:3',
-            'description' => 'required|max:200',
-            'price' => 'required|numeric|min:0'
-        ];
-        $this->validate($request, $rules, $messages);
+        $this->validate($request, Category::$rules, Category::$messages);
         
-        $product = Product::find($id);
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->long_description = $request->input('long_description');
-        $product->save(); // INSERT OR UPDATE en la bd
+        $category->update($request->all());
 
-        return redirect('admin/products');
+        return redirect('admin/categories');
     }
 
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $product = Product::find($id);
-        $product->delete();
+        //$product = Product::find($id);
+        $category->delete();
 
         return back(); // retorna a la página anterior
     }
