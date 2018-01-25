@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
  // ya que al crear una carpeta Admin, la clase bse Controller lo busca dentro de Admin
 // por lo tanto, hay que especificar donde realmente esta la clase base Controller
+use App\Category;
 use App\Http\Controllers\Controller;
-
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -19,7 +19,8 @@ class ProductController extends Controller
 
     public function create() //muestra la vista de registro de un producto
     {
-    	return view('admin.products.create');
+        $categories = Category::orderBy('name')->get();
+    	return view('admin.products.create', compact('categories'));
     }
 
     //registrar un nuevo producto en la bd
