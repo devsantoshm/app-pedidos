@@ -48,6 +48,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->long_description = $request->input('long_description');
+        $product->category_id = $request->category_id == 0 ? null : $request->category_id;
         $product->save(); // INSERT en la bd
 
         return redirect('admin/products');
@@ -55,8 +56,9 @@ class ProductController extends Controller
 
     public function edit($id) //muestra el formulario edición de un producto
     {
+        $categories = Category::orderBy('name')->get();
         $product = Product::find($id);
-        return view('admin.products.edit', compact('product'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     //registrar un nuevo producto en la bd
@@ -84,6 +86,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->long_description = $request->input('long_description');
+        $product->category_id = $request->category_id == 0 ? null : $request->category_id;
         $product->save(); // INSERT OR UPDATE en la bd
 
         return redirect('admin/products');

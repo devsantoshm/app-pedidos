@@ -50,7 +50,7 @@
                     <div class="col-sm-6">
                         <div class="form-group label-floating">
                             <label class="control-label">Categoría del producto</label>
-                            <select>
+                            <select class="form-control" name="category_id">
                                 <option value="0">General</option>
                                 @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>

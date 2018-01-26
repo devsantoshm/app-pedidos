@@ -42,7 +42,7 @@
                                         {{ method_field('DELETE') }}
                                         <!-- <input type="hidden" name="_method" value="DELETE"> -->
                                         
-                                        <a href="#" rel="tooltip" title="Ver producto" class="btn btn-info btn-simple btn-xs">
+                                        <a href="{{ url('products/'.$product->id) }}" rel="tooltip" title="Ver producto" class="btn btn-info btn-simple btn-xs" target="_blank">
                                             <i class="fa fa-info"></i>
                                         </a>
                                         <a href="{{ url('admin/products/'.$product->id.'/edit') }}" rel="tooltip" title="Editar producto" class="btn btn-success btn-simple btn-xs">
