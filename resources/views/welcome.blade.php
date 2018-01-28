@@ -86,6 +86,12 @@
 
         <div class="section text-center">
             <h2 class="title">Visita nuestras categorías</h2>
+            <form class="form-inline" method="get" action="{{ url('/search') }}">
+                <input type="text" name="query" placeholder="¿Qué producto buscas?" class="form-control">
+                <button class="btn btn-primary btn-just-icon" type="submit">
+                    <i class="material-icons">search</i>
+                </button>
+            </form>
 
             <div class="team">
                 <div class="row">
