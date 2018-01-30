@@ -205,7 +205,7 @@
             var products = new Bloodhound({
               datumTokenizer: Bloodhound.tokenizers.whitespace,
               queryTokenizer: Bloodhound.tokenizers.whitespace,
-              local: ['hola', 'prueba1', 'prueba2']
+              prefetch: '{{ url("/products/json") }}'
             });
             //inicializa typeahead sobre nuestro input de búsqueda
             $('#search').typeahead({
