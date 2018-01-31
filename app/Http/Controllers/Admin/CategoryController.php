@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use File;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,21 @@ class CategoryController extends Controller
     {
         $this->validate($request, Category::$rules, Category::$messages);
   
-        Category::create($request->all()); //Asignación masiva de atributos
+        $category = Category::create($request->only('name', 'description'));
+
+        if ($request->hasFile('image')) {
+            // Guardar la img en nuestro proyecto
+            $file = $request->file('image');
+            $path = public_path() . '/images/categories';
+            $fileName = uniqid() . '-' . $file->getClientOriginalName(); //ára evitar subir imagenes con el mismo nombre
+            $moved = $file->move($path, $fileName);
+
+            // Crear un registro en la tabla category
+            if($moved){
+                $category->image = $fileName;
+                $category->save(); // insert
+            }
+        }
 
         return redirect('admin/categories');
     }
@@ -41,7 +56,24 @@ class CategoryController extends Controller
     {
         $this->validate($request, Category::$rules, Category::$messages);
         
-        $category->update($request->all());
+        $category->update($request->only('name', 'description'));
+
+        if ($request->hasFile('image')) {
+            // Guardar la img en nuestro proyecto
+            $file = $request->file('image');
+            $path = public_path() . '/images/categories';
+            $fileName = uniqid() . '-' . $file->getClientOriginalName(); //ára evitar subir imagenes con el mismo nombre
+            $moved = $file->move($path, $fileName);
+
+            // Crear un registro en la tabla category
+            if($moved){
+                $previousPath = $path . '/' . $category->image;
+                $category->image = $fileName;
+                $saved = $category->save(); // update
+                if($saved)
+                    File::delete($previousPath);
+            }
+        }
 
         return redirect('admin/categories');
     }

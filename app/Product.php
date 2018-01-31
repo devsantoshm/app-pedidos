@@ -29,7 +29,7 @@ class Product extends Model
     		return $featuredImage->url; // url un atributo calculado, devolver url de la imagen asociada a traés del accesor getUrlAttribute() del modelo ProductImage
     	}
 
-    	return '/images/products/default.png'; // si no encuentra ninguna imágen
+    	return '/images/default.png'; // si no encuentra ninguna imágen
     }
 
     public function getCategoryNameAttribute()
