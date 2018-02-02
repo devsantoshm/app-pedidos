@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+//use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request as Req;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -67,5 +69,13 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    //reescribir el método del trait RegistersUsers
+    public function showRegistrationForm(Req $request)
+    {
+        $name = $request->input('name');
+        $email = $request->input('email');
+
+        return view('auth.register', compact('name', 'email'));
     }
 }
